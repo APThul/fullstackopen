@@ -31,33 +31,13 @@ sequenceDiagram
     Note right of browser: The browser executes the callback function that renders the notes
 
     user->>browser: inputs note and clicks save
-    Note right of browser: on "save" the browser takes the input and readies to send to server
+    Note right of browser: on "save" the JS prevents default and creates a new note object {"message":"note created"} <br> it adds to array and rerenders </br>
 
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
     activate server
-    server-->>browser: 302 Found - redirects to exampleapp/notes
-    deactivate server
+    server-->>browser: 201 Created - JSON
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
-    activate server
-    server-->>browser: HTML document
-    deactivate server
+    Note right of browser: page is updated without reloading
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
-    activate server
-    server-->>browser: the css file
-    deactivate server
-
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
-    activate server
-    server-->>browser: the JavaScript file
-    deactivate server
-
-    Note right of browser: The browser starts executing the JavaScript code that fetches the JSON from the server
-
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    activate server
-    server-->>browser: [{"content": "note","date": "2025-12-02T19:01:34.425Z"}, ... ] - updated notes
-    deactivate server
 
 ```
